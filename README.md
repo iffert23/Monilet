@@ -2,7 +2,7 @@
 
 일하는 시간에 따라 쌓이는 금액을 작은 위젯으로 확인하는 Windows 앱입니다.
 
-현재 첫 공개 배포를 준비 중입니다. 설치 파일이 준비되면 [Releases](https://github.com/iffert23/Pay-Tick/releases)에 게시합니다.
+Windows 설치 파일과 업데이트 내용은 [Releases](https://github.com/iffert23/Pay-Tick/releases)에서 확인할 수 있습니다.
 
 - 앱 계정 없이 사용할 수 있습니다.
 - 급여·근무시간·휴가·잔업·테마 설정은 PC에 저장합니다.
