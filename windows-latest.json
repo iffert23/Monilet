@@ -1,7 +1,7 @@
 {
-  "available": false,
-  "version": "",
-  "downloadUrl": "",
-  "sha256": "",
-  "notes": "첫 공개 배포를 준비 중입니다."
+  "available": true,
+  "sha256": "c2a338b4a307649175a4a93f260e10063d71cf2f148c5fc54c48afea7a516e98",
+  "downloadUrl": "https://github.com/iffert23/Pay-Tick/releases/download/v1.1.2/PayTick-Setup-1.1.2.exe",
+  "version": "1.1.2",
+  "notes": "PayTick 1.1.2\n\n- PayTick 이름 적용, 치이카와·당근·노란오리·쿼카·다람쥐와 도토리·흰 오리·노란오리와 흰 오리 테마와 6가지 배경색 팔레트 제공\n- 계정 없이 설정과 날짜별 근무·휴가·잔업을 백업하고 다른 PC로 가져오기, 가져오기 전 자동 백업\n- 잠금 해제·절전 복귀 시 위젯 표시 상태 복구 보강\n- 업데이트 확인, 선택적 자동 다운로드·설치, 피드백 및 진단 자료 내보내기\n- 설정 메뉴 순서 조정 및 마지막으로 보던 메뉴 기억\n\n설치 파일은 PayTick-Setup-1.1.2.exe 하나입니다. 처음 수동 설치하실 때에는 기존 앱을 트레이 메뉴에서 종료해 주세요. 기존 설정은 유지됩니다.\n\n잠금·복귀 알림과 설치·업데이트 동작은 Windows 환경에서 검사했습니다. 사용자 PC의 실제 10분 잠금 증상은 아직 직접 재현하지 못했습니다.\n코드 서명이 없어 Chrome 또는 Windows SmartScreen 경고가 표시될 수 있습니다. 빌드 환경의 Microsoft Defender 검사에서는 탐지되지 않았습니다.\n\nSHA-256: c2a338b4a307649175a4a93f260e10063d71cf2f148c5fc54c48afea7a516e98"
 }
