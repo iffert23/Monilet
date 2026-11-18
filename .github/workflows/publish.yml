@@ -1,0 +1,64 @@
+name: Publish verified PayTick installer
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: Verified installer version
+      installer_zip_url:
+        required: true
+        description: Temporary HTTPS link to the installer-only ZIP
+      sha256:
+        required: true
+        description: EXE SHA-256 from the successful private validation
+      notes:
+        required: true
+        description: Release notes
+permissions:
+  contents: write
+concurrency:
+  group: public-release
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_VERSION: ${{ inputs.version }}
+      INSTALLER_URL: ${{ inputs.installer_zip_url }}
+      EXPECTED_HASH: ${{ inputs.sha256 }}
+      RELEASE_NOTES: ${{ inputs.notes }}
+    steps:
+      - name: Download and validate the one installer
+        shell: pwsh
+        run: |
+          Write-Output "::add-mask::$env:INSTALLER_URL"
+          if($env:RELEASE_VERSION -notmatch '^\d+\.\d+\.\d+$' -or $env:EXPECTED_HASH -notmatch '^[a-fA-F0-9]{64}$'){throw 'Invalid release identity'}
+          $url=[Uri]$env:INSTALLER_URL;if($url.Scheme -ne 'https'){throw 'HTTPS download required'}
+          Invoke-WebRequest -Uri $url -OutFile installer.zip
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $zip=[IO.Compression.ZipFile]::OpenRead((Resolve-Path installer.zip))
+          try{
+            if($zip.Entries.Count -ne 1 -or $zip.Entries[0].FullName -ne "PayTick-Setup-$env:RELEASE_VERSION.exe"){throw 'Expected exactly one named EXE'}
+            [IO.Compression.ZipFileExtensions]::ExtractToFile($zip.Entries[0],(Join-Path $pwd $zip.Entries[0].Name))
+          }finally{$zip.Dispose()}
+          $exe="PayTick-Setup-$env:RELEASE_VERSION.exe"
+          if((Get-FileHash $exe -Algorithm SHA256).Hash -ne $env:EXPECTED_HASH){throw 'Installer hash mismatch'}
+          if([Diagnostics.FileVersionInfo]::GetVersionInfo((Resolve-Path $exe)).FileVersion -ne $env:RELEASE_VERSION){throw 'Installer version mismatch'}
+      - name: Publish installer and update information
+        shell: pwsh
+        run: |
+          $version=$env:RELEASE_VERSION;$tag="v$version";$exe="PayTick-Setup-$version.exe"
+          $env:RELEASE_NOTES|Set-Content notes.md -Encoding utf8
+          gh release view $tag --repo $env:GITHUB_REPOSITORY 2>$null
+          if(!$LASTEXITCODE){throw 'An existing release will not be replaced'}
+          gh release create $tag $exe --repo $env:GITHUB_REPOSITORY --title "PayTick $version" --notes-file notes.md
+          if($LASTEXITCODE){throw 'Release publication failed'}
+          $manifest=@{available=$true;version=$version;downloadUrl="https://github.com/$env:GITHUB_REPOSITORY/releases/download/$tag/$exe";sha256=$env:EXPECTED_HASH.ToLowerInvariant();notes=$env:RELEASE_NOTES}|ConvertTo-Json
+          $current=gh api "repos/$env:GITHUB_REPOSITORY/contents/windows-latest.json"|ConvertFrom-Json
+          if($LASTEXITCODE){throw 'Cannot read the existing update manifest'}
+          $body=@{message="Publish update information for $version";sha=$current.sha;content=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($manifest))}|ConvertTo-Json
+          $body|Set-Content update-request.json -Encoding utf8
+          gh api "repos/$env:GITHUB_REPOSITORY/contents/windows-latest.json" --method PUT --input update-request.json
+          if($LASTEXITCODE){throw 'Manifest publication failed'}

@@ -1,0 +1,32 @@
+name: 오류 신고
+description: PayTick 사용 중 문제가 생겼나요?
+title: '[오류] '
+body:
+  - type: markdown
+    attributes:
+      value: 급여·근무 기록이 담긴 백업 JSON은 공개 이슈에 첨부하지 마세요. 필요하면 앱에서 진단 자료를 내보내 주세요.
+  - type: input
+    id: version
+    attributes:
+      label: PayTick 버전
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows 버전과 모니터 구성
+  - type: textarea
+    id: problem
+    attributes:
+      label: 어떤 문제가 발생했나요?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 재현 순서
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: 진단 자료 또는 스크린샷
+      description: 개인정보가 없는지 확인한 뒤 선택적으로 첨부해 주세요.

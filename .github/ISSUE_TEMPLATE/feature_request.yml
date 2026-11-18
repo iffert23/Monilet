@@ -1,0 +1,14 @@
+name: 기능 제안
+description: PayTick에 추가되면 좋은 기능을 알려 주세요.
+title: '[제안] '
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: 어떤 기능이 필요하신가요?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: 어떤 상황에서 도움이 될까요?
