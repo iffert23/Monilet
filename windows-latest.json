@@ -1,7 +1,7 @@
 {
-  "downloadUrl": "https://github.com/iffert23/Pay-Tick/releases/download/v1.1.7/PayTick-Setup-1.1.7.exe",
+  "sha256": "5f174f695cf3ad825737c45278d30a4a08bcf1a96701a62fe7e423a92d0377e5",
   "available": true,
-  "sha256": "7ccb65f978228b728ec0587d37e8930a1c624275d8c220655bf119c45d2ad3f5",
-  "version": "1.1.7",
-  "notes": "- 저작권 이슈가 있어, 치이카와 테마를 제거하고 사용자 지정 이미지를 추가했습니다.\n- 자동 업데이트를 기본으로 켰으며, 설정에서 끌 수 있습니다.\n- 저장 안내 메세지는 3~5초 후 사라지며, 정보 메뉴에 설명서 페이지로 바로 가는 버튼을 추가했습니다.\n"
+  "version": "1.1.8",
+  "notes": "- ‘−’ 버튼으로 금액과 시계를 전환할 수 있습니다.\n- 절전·잠금 해제 후 위젯이 다시 표시되도록 복구 기능을 개선했습니다.\n- '자동으로 다운로드하고 설치'에서 ‘자동 업데이트’로 이름을 바꾸고, 새 버전 자동 확인을 끄면 업데이트·알림도 함께 꺼지도록 수정했습니다.\n",
+  "downloadUrl": "https://github.com/iffert23/Pay-Tick/releases/download/v1.1.8/PayTick-Setup-1.1.8.exe"
 }
