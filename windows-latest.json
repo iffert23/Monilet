@@ -1,7 +1,7 @@
 {
-  "version": "1.1.5",
-  "downloadUrl": "https://github.com/iffert23/Pay-Tick/releases/download/v1.1.5/PayTick-Setup-1.1.5.exe",
-  "notes": "• 테마 이미지와 파스텔 배경색을 다듬었습니다.\n• 치이카와를 은은한 위젯 배경으로 옮겼습니다.\n• 테마 선택과 업데이트 안내를 정리했습니다.\n",
   "available": true,
-  "sha256": "9dd80a2dbe0f2e27b0fb6b5790dfeab4207445df15e2768c4fcb20340edbb39a"
+  "version": "1.1.6",
+  "downloadUrl": "https://github.com/iffert23/Pay-Tick/releases/download/v1.1.6/PayTick-Setup-1.1.6.exe",
+  "notes": "- 설치 폴더 이름을 PayTick으로 변경했습니다.\n- 기존 설치도 기록과 바로가기를 유지해 이전합니다.",
+  "sha256": "9bf8aeb14cbbef7d96eaf6183b42303d1d3af3e4ccf2bc4a47380b16d1b2670d"
 }
