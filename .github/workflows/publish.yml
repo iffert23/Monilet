@@ -1,4 +1,4 @@
-name: Publish verified PayTick installer
+name: Publish verified Monilet installer
 on:
   workflow_dispatch:
     inputs:
@@ -40,25 +40,41 @@ jobs:
           Add-Type -AssemblyName System.IO.Compression.FileSystem
           $zip=[IO.Compression.ZipFile]::OpenRead((Resolve-Path installer.zip))
           try{
-            if($zip.Entries.Count -ne 1 -or $zip.Entries[0].FullName -ne "PayTick-Setup-$env:RELEASE_VERSION.exe"){throw 'Expected exactly one named EXE'}
+            if($zip.Entries.Count -ne 1 -or $zip.Entries[0].FullName -ne "Monilet-Setup-$env:RELEASE_VERSION.exe"){throw 'Expected exactly one named EXE'}
             [IO.Compression.ZipFileExtensions]::ExtractToFile($zip.Entries[0],(Join-Path $pwd $zip.Entries[0].Name))
           }finally{$zip.Dispose()}
-          $exe="PayTick-Setup-$env:RELEASE_VERSION.exe"
+          $exe="Monilet-Setup-$env:RELEASE_VERSION.exe"
           if((Get-FileHash $exe -Algorithm SHA256).Hash -ne $env:EXPECTED_HASH){throw 'Installer hash mismatch'}
           if([Diagnostics.FileVersionInfo]::GetVersionInfo((Resolve-Path $exe)).FileVersion -ne $env:RELEASE_VERSION){throw 'Installer version mismatch'}
       - name: Publish installer and update information
         shell: pwsh
         run: |
-          $version=$env:RELEASE_VERSION;$tag="v$version";$exe="PayTick-Setup-$version.exe"
+          if($env:GITHUB_REPOSITORY -ne 'iffert23/Monilet'){throw 'Rename the distribution repository before publishing Monilet'}
+          $version=$env:RELEASE_VERSION;$tag="v$version";$exe="Monilet-Setup-$version.exe"
           $env:RELEASE_NOTES|Set-Content notes.md -Encoding utf8
           gh release view $tag --repo $env:GITHUB_REPOSITORY 2>$null
           if(!$LASTEXITCODE){throw 'An existing release will not be replaced'}
-          gh release create $tag $exe --repo $env:GITHUB_REPOSITORY --title "PayTick $version" --notes-file notes.md
+          gh release create $tag $exe --repo $env:GITHUB_REPOSITORY --title "Monilet $version" --notes-file notes.md
           if($LASTEXITCODE){throw 'Release publication failed'}
-          $manifest=@{available=$true;version=$version;downloadUrl="https://github.com/$env:GITHUB_REPOSITORY/releases/download/$tag/$exe";sha256=$env:EXPECTED_HASH.ToLowerInvariant();notes=$env:RELEASE_NOTES}|ConvertTo-Json
-          $current=gh api "repos/$env:GITHUB_REPOSITORY/contents/windows-latest.json"|ConvertFrom-Json
-          if($LASTEXITCODE){throw 'Cannot read the existing update manifest'}
-          $body=@{message="Publish update information for $version";sha=$current.sha;content=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($manifest))}|ConvertTo-Json
-          $body|Set-Content update-request.json -Encoding utf8
-          gh api "repos/$env:GITHUB_REPOSITORY/contents/windows-latest.json" --method PUT --input update-request.json
-          if($LASTEXITCODE){throw 'Manifest publication failed'}
+          # Legacy installed apps only accept the former repository URL prefix.
+          # GitHub redirects this alias to the renamed repository; keep it reserved.
+          $newManifest=@{available=$true;version=$version;downloadUrl="https://github.com/$env:GITHUB_REPOSITORY/releases/download/$tag/$exe";sha256=$env:EXPECTED_HASH.ToLowerInvariant();notes=$env:RELEASE_NOTES}
+          $legacyManifest=$newManifest.Clone()
+          $legacyManifest.downloadUrl="https://github.com/iffert23/Pay-Tick/releases/download/$tag/$exe"
+          $head=gh api "repos/$env:GITHUB_REPOSITORY/git/ref/heads/main"|ConvertFrom-Json
+          if($LASTEXITCODE){throw 'Cannot read distribution head'}
+          $commit=gh api "repos/$env:GITHUB_REPOSITORY/git/commits/$($head.object.sha)"|ConvertFrom-Json
+          if($LASTEXITCODE){throw 'Cannot read distribution tree'}
+          $entries=@()
+          foreach($entry in @(@{path='windows-latest.json';manifest=$legacyManifest},@{path='monilet-windows-latest.json';manifest=$newManifest})){
+            $entries+=@{path=$entry.path;mode='100644';type='blob';content=($entry.manifest|ConvertTo-Json)}
+          }
+          @{base_tree=$commit.tree.sha;tree=$entries}|ConvertTo-Json -Depth 8|Set-Content tree-request.json -Encoding utf8
+          $tree=gh api "repos/$env:GITHUB_REPOSITORY/git/trees" --method POST --input tree-request.json|ConvertFrom-Json
+          if($LASTEXITCODE){throw 'Cannot prepare both update manifests'}
+          @{message="Publish Monilet $version update channels";tree=$tree.sha;parents=@($head.object.sha)}|ConvertTo-Json|Set-Content commit-request.json -Encoding utf8
+          $next=gh api "repos/$env:GITHUB_REPOSITORY/git/commits" --method POST --input commit-request.json|ConvertFrom-Json
+          if($LASTEXITCODE){throw 'Cannot commit update channels'}
+          @{sha=$next.sha;force=$false}|ConvertTo-Json|Set-Content ref-request.json -Encoding utf8
+          gh api "repos/$env:GITHUB_REPOSITORY/git/refs/heads/main" --method PATCH --input ref-request.json
+          if($LASTEXITCODE){throw 'Manifest publication failed; do not force-overwrite a changed branch'}

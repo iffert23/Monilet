@@ -1,5 +1,5 @@
 name: 오류 신고
-description: PayTick 사용 중 문제가 생겼나요?
+description: Monilet 사용 중 문제가 생겼나요?
 title: '[오류] '
 body:
   - type: markdown
@@ -8,7 +8,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: PayTick 버전
+      label: Monilet 버전
     validations:
       required: true
   - type: input

@@ -1,20 +1,20 @@
-# PayTick
+# Monilet
 
 일하는 동안 쌓이는 금액을 작은 Windows 위젯으로 확인하세요.
 
-**[Windows용 다운로드](https://github.com/iffert23/Pay-Tick/releases/latest)** · [업데이트 내역](https://github.com/iffert23/Pay-Tick/releases) · [오류·기능 제안](https://github.com/iffert23/Pay-Tick/issues/new/choose)
+**[Windows용 다운로드](https://github.com/iffert23/Monilet/releases/latest)** · [업데이트 내역](https://github.com/iffert23/Monilet/releases) · [오류·기능 제안](https://github.com/iffert23/Monilet/issues/new/choose)
 
-![노란오리 배경을 적용한 PayTick 위젯](assets/paytick-widget.png)
+![노란오리 배경을 적용한 Monilet 위젯](assets/monilet-widget.png)
 
 ## 다운로드하고 시작하기
 
-1. 위 다운로드 링크에서 **PayTick-Setup-버전.exe** 설치 파일 하나를 받으세요. GitHub 로그인은 필요하지 않습니다.
+1. 위 다운로드 링크에서 **Monilet-Setup-버전.exe** 설치 파일 하나를 받으세요. GitHub 로그인은 필요하지 않습니다.
 2. 파일을 열고 **설치**, 완료되면 **실행**을 누르세요. 별도로 압축을 풀 필요가 없습니다.
 3. 앱 설정에서 **근무시간·월급일·급여**를 입력하고 저장하세요. 위젯은 바탕화면에서 누적 금액을 보여줍니다.
 
 Windows 10(1903 이상) 또는 Windows 11의 64비트 PC에서 사용할 수 있습니다. 설치 후에는 인터넷 없이 동작합니다.
 
-설치 위치는 `%LOCALAPPDATA%\Programs\PayTick`입니다. 기존 PayClock 폴더에 설치한 경우 업데이트하면 새 경로로 옮겨지며, 저장된 기록과 바로가기는 유지됩니다.
+설치 위치는 `%LOCALAPPDATA%\Programs\Monilet`입니다. 기존 버전을 업데이트하면 새 경로로 옮겨지고 이전 프로그램 파일과 바로가기는 정리됩니다. 저장된 기록은 유지됩니다.
 
 ## 내 방식대로 사용하기
 
@@ -30,20 +30,20 @@ Windows 10(1903 이상) 또는 Windows 11의 64비트 PC에서 사용할 수 있
 
 ## 다른 PC로 기록 옮기기
 
-사용하던 PC의 **정보 → 데이터 내보내기**에서 파일을 저장하세요. 새 PC에 PayTick을 설치한 뒤 **정보 → 데이터 가져오기**로 파일을 선택하면 됩니다. 가져오기 전의 데이터는 자동 백업합니다.
+사용하던 PC의 **정보 → 데이터 내보내기**에서 파일을 저장하세요. 새 PC에 Monilet을 설치한 뒤 **정보 → 데이터 가져오기**로 파일을 선택하면 됩니다. 가져오기 전의 데이터는 자동 백업합니다.
 
 급여·근무 기록과 사용자 이미지는 사용 중인 PC에 저장되며 데이터 백업에도 포함됩니다. 앱 계정은 필요하지 않습니다. 백업 파일에는 개인 정보가 담기므로 직접 보관해 주세요.
 
-정보 메뉴 맨 아래의 **설명서** 버튼으로 [사용 안내](https://paytick.hachjy.com/)를 열 수 있습니다.
+정보 메뉴 맨 아래의 **설명서** 버튼으로 [사용 안내](https://monilet.hachjy.com/)를 열 수 있습니다.
 
 ## 도움이 필요할 때
 
 ### 설치 중 SmartScreen 안내가 표시되나요?
 
-‘Windows의 PC 보호’ 화면만으로 바이러스가 발견됐다는 뜻은 아닙니다. SmartScreen은 앱의 게시자와 평판을 확인하는 Windows 기능이며, PayTick은 현재 코드 서명이 없어 안내가 표시될 수 있습니다.
+‘Windows의 PC 보호’ 화면만으로 바이러스가 발견됐다는 뜻은 아닙니다. SmartScreen은 앱의 게시자와 평판을 확인하는 Windows 기능이며, Monilet은 현재 코드 서명이 없어 안내가 표시될 수 있습니다.
 
 이 저장소의 공식 다운로드에서 받은 파일인지 확인해 주세요. SmartScreen 안내와 백신의 실제 악성코드 탐지는 구분해야 합니다. 백신이 탐지를 알리거나 회사 보안 정책으로 차단한 경우에는 실행을 멈추고 담당자에게 확인해 주세요.
 
-문제가 계속되면 [오류 신고](https://github.com/iffert23/Pay-Tick/issues/new/choose)에 화면과 오류 메시지를 남겨 주세요. 이슈 작성에는 GitHub 로그인이 필요합니다. 앱의 **진단 자료 내보내기**를 이용할 수 있으며, 급여가 담긴 백업 파일은 공개 이슈에 첨부하지 마세요.
+문제가 계속되면 [오류 신고](https://github.com/iffert23/Monilet/issues/new/choose)에 화면과 오류 메시지를 남겨 주세요. 이슈 작성에는 GitHub 로그인이 필요합니다. 앱의 **진단 자료 내보내기**를 이용할 수 있으며, 급여가 담긴 백업 파일은 공개 이슈에 첨부하지 마세요.
 
 이 저장소는 설치 파일 배포·업데이트 정보·이슈 접수용입니다.
