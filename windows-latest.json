@@ -1,7 +1,7 @@
 {
-  "sha256": "5f174f695cf3ad825737c45278d30a4a08bcf1a96701a62fe7e423a92d0377e5",
+  "notes": "- 앱 이름을 ‘모니렛(Monilet)’으로 변경되었습니다. 설치 경로도 변경되며 기존 설정과 기록은 유지됩니다.\n- 모니터 연결이 끊겼을 때 위젯의 위치와 크기가 복구되도록 수정했습니다.\n- 금액 입력 시 쉼표가 포함된 연봉도 붙여 넣을 수 있도록 수정했습니다.",
   "available": true,
-  "version": "1.1.8",
-  "notes": "- ‘−’ 버튼으로 금액과 시계를 전환할 수 있습니다.\n- 절전·잠금 해제 후 위젯이 다시 표시되도록 복구 기능을 개선했습니다.\n- '자동으로 다운로드하고 설치'에서 ‘자동 업데이트’로 이름을 바꾸고, 새 버전 자동 확인을 끄면 업데이트·알림도 함께 꺼지도록 수정했습니다.\n",
-  "downloadUrl": "https://github.com/iffert23/Pay-Tick/releases/download/v1.1.8/PayTick-Setup-1.1.8.exe"
+  "sha256": "8e5d811e35e927566a4a851b02a9339449865099a93d3ff168ea3e3c0b37ed4e",
+  "downloadUrl": "https://github.com/iffert23/Pay-Tick/releases/download/v1.1.9/Monilet-Setup-1.1.9.exe",
+  "version": "1.1.9"
 }

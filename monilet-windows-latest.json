@@ -1,0 +1,7 @@
+{
+  "notes": "- 앱 이름을 ‘모니렛(Monilet)’으로 변경되었습니다. 설치 경로도 변경되며 기존 설정과 기록은 유지됩니다.\n- 모니터 연결이 끊겼을 때 위젯의 위치와 크기가 복구되도록 수정했습니다.\n- 금액 입력 시 쉼표가 포함된 연봉도 붙여 넣을 수 있도록 수정했습니다.",
+  "sha256": "8e5d811e35e927566a4a851b02a9339449865099a93d3ff168ea3e3c0b37ed4e",
+  "available": true,
+  "version": "1.1.9",
+  "downloadUrl": "https://github.com/iffert23/Monilet/releases/download/v1.1.9/Monilet-Setup-1.1.9.exe"
+}
