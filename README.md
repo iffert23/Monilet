@@ -1,8 +1,12 @@
 # Monilet
 
-일하는 동안 쌓이는 금액을 작은 Windows 위젯으로 확인하세요.
+작은 반려 펫과 함께, 일하는 동안 쌓이는 금액을 데스크톱 위젯으로 확인하세요.
 
 **[Windows용 다운로드](https://github.com/iffert23/Monilet/releases/latest)** · [업데이트 내역](https://github.com/iffert23/Monilet/releases) · [오류·기능 제안](https://github.com/iffert23/Monilet/issues/new/choose)
+
+**Windows 정식 1.1.13** · **[macOS 1.1.12 사전배포](https://github.com/iffert23/Monilet/releases/tag/macos-v1.1.12)** · Android 개발 중
+
+macOS는 macOS 13 이상, Apple Silicon·Intel Mac을 지원합니다. 사전배포 페이지에서 DMG 또는 ZIP과 첫 실행 안내를 확인하세요. 플랫폼별 설치 방법은 [공식 사이트](https://monilet.hachjy.com/)에서도 볼 수 있습니다.
 
 ![노란오리 배경을 적용한 Monilet 위젯](assets/monilet-widget.png)
 
@@ -23,6 +27,12 @@ Windows 10(1903 이상) 또는 Windows 11의 64비트 PC에서 사용할 수 있
 - 내장 테마와 파스텔 배경색, 위젯 크기·투명도·모니터 위치를 고를 수 있습니다.
 - **사용자 지정**에서 투명 배경의 **512×512px PNG, 2MB 이하** 이미지를 선택할 수 있습니다. 조건이 맞지 않으면 선택할 수 없습니다.
 - **‘−’**로 금액과 시계를 전환하며 테마는 유지합니다. **‘×’**로 위젯을 트레이로 숨깁니다. 트레이 메뉴에서 다시 표시하거나 완전히 종료할 수 있습니다.
+
+## 작은 반려 펫과 함께하기
+
+설정의 **반려 펫** 메뉴에서 켤 수 있습니다. 무료 반려 펫은 **날개돈다발·날개코인**이며, 유료 서비스 예정인 동물 반려 펫 10종은 설정창에서 움직임과 소개를 미리 볼 수 있습니다. 구매는 추후 제공될 예정입니다.
+
+반려 펫마다 이름을 짓고 출근·퇴근·월급날·월급날 전날의 대사와 표시 시간대를 고르세요. 직접 정한 응원 문구도 사용할 수 있습니다. 반려 펫은 기본으로 꺼져 있으며 기본 급여 계산 기능은 계속 무료로 사용할 수 있습니다.
 
 ## 업데이트
 
