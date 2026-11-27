@@ -43,7 +43,7 @@ jobs:
             if((Get-Item $asset.name).Length -ne $asset.bytes){throw 'Original asset size mismatch'}
             if((Get-FileHash $asset.name -Algorithm SHA256).Hash.ToLowerInvariant() -ne $asset.sha){throw 'Original asset hash mismatch'}
           }
-          gh release upload $tag $assets[0].name $assets[1].name --repo $env:GITHUB_REPOSITORY --clobber
+          gh release upload $tag ($assets[0].name) ($assets[1].name) --repo $env:GITHUB_REPOSITORY --clobber
           if($LASTEXITCODE){throw 'Draft asset upload failed'}
           $verified=gh api "repos/$env:GITHUB_REPOSITORY/releases/460338486" | ConvertFrom-Json
           if($LASTEXITCODE -or !$verified.draft -or !$verified.prerelease -or $verified.tag_name -ne $tag){throw 'Draft state verification failed'}
