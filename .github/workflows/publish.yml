@@ -26,13 +26,14 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       RELEASE_VERSION: ${{ inputs.version }}
-      INSTALLER_URL: ${{ inputs.installer_zip_url }}
       EXPECTED_HASH: ${{ inputs.sha256 }}
       RELEASE_NOTES: ${{ inputs.notes }}
     steps:
       - name: Download and validate the one installer
         shell: pwsh
         run: |
+          $event=Get-Content -Raw $env:GITHUB_EVENT_PATH | ConvertFrom-Json
+          $env:INSTALLER_URL=[string]$event.inputs.installer_zip_url
           Write-Output "::add-mask::$env:INSTALLER_URL"
           if($env:RELEASE_VERSION -notmatch '^\d+\.\d+\.\d+$' -or $env:EXPECTED_HASH -notmatch '^[a-fA-F0-9]{64}$'){throw 'Invalid release identity'}
           $url=[Uri]$env:INSTALLER_URL;if($url.Scheme -ne 'https'){throw 'HTTPS download required'}
