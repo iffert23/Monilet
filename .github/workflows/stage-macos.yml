@@ -1,0 +1,54 @@
+name: Stage verified macOS prerelease
+on:
+  workflow_dispatch:
+    inputs:
+      dmg_url:
+        required: true
+        description: Temporary GitHub release-asset URL for the verified DMG
+      zip_url:
+        required: true
+        description: Temporary GitHub release-asset URL for the verified ZIP
+permissions:
+  contents: write
+concurrency:
+  group: macos-prerelease-stage
+  cancel-in-progress: false
+jobs:
+  stage:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Validate and attach original macOS assets to the existing draft
+        shell: pwsh
+        run: |
+          $ErrorActionPreference='Stop'
+          if($env:GITHUB_REPOSITORY -ne 'iffert23/Monilet'){throw 'Unexpected distribution repository'}
+          $tag='macos-v1.1.12'
+          $release=gh release view $tag --repo $env:GITHUB_REPOSITORY --json isDraft,isPrerelease | ConvertFrom-Json
+          if($LASTEXITCODE -or !$release.isDraft -or !$release.isPrerelease){throw 'An existing unpublished prerelease draft is required'}
+          $event=Get-Content -Raw $env:GITHUB_EVENT_PATH | ConvertFrom-Json
+          $assets=@(
+            @{input='dmg_url';name='Monilet-macOS-1.1.12.dmg';bytes=6655550;sha='f445ab198febf902c05bdcd36be82a632d5d04a4c11860e6c014cdffe003406c'},
+            @{input='zip_url';name='Monilet-macOS-1.1.12.zip';bytes=6258321;sha='e3b048968c4f5d5ecfb0f55115e6f2f8d2d7bf2d637a573c4c173eae37f88692'}
+          )
+          foreach($asset in $assets){
+            $link=[string]$event.inputs.($asset.input)
+            if($link -match '[\r\n]' -or !$link){throw 'Missing or invalid download locator'}
+            Write-Output "::add-mask::$link"
+            $uri=[Uri]$link
+            if($uri.Scheme -ne 'https' -or $uri.Host -ne 'release-assets.githubusercontent.com'){throw 'Expected GitHub release-asset HTTPS locator'}
+            try{Invoke-WebRequest -Uri $uri -OutFile $asset.name}catch{throw 'Asset download failed; obtain a fresh GitHub download locator'}
+            if((Get-Item $asset.name).Length -ne $asset.bytes){throw 'Original asset size mismatch'}
+            if((Get-FileHash $asset.name -Algorithm SHA256).Hash.ToLowerInvariant() -ne $asset.sha){throw 'Original asset hash mismatch'}
+          }
+          gh release upload $tag $assets[0].name $assets[1].name --repo $env:GITHUB_REPOSITORY --clobber
+          if($LASTEXITCODE){throw 'Draft asset upload failed'}
+          $verified=gh api "repos/$env:GITHUB_REPOSITORY/releases/460338486" | ConvertFrom-Json
+          if($LASTEXITCODE -or !$verified.draft -or !$verified.prerelease -or $verified.tag_name -ne $tag){throw 'Draft state verification failed'}
+          foreach($asset in $assets){
+            $uploaded=@($verified.assets | Where-Object name -EQ $asset.name)
+            if($uploaded.Count -ne 1 -or $uploaded[0].size -ne $asset.bytes -or $uploaded[0].digest -ne "sha256:$($asset.sha)"){throw 'Uploaded original asset verification failed'}
+          }
+          "Verified both original macOS 1.1.12 files. The prerelease remains an unpublished draft." >> $env:GITHUB_STEP_SUMMARY
